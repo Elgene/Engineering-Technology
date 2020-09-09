@@ -1,0 +1,30 @@
+#include <iostream> 
+# include <math.h>
+# include "wav.hpp"
+
+using namespace std;
+int main ()
+{
+ double samplingRate=44100;	
+ double dt=1/samplingRate;
+ double durationT=10;
+ double f=6000;
+ int nSample= (int)(durationT*samplingRate);
+
+WavSound sound1;
+
+ int waveForm[nSample];
+ 
+ for(int i=0;i<nSample;i=i+1){
+	   double t=i*dt;
+	   double calValue= 4000* sin(2*M_PI*f*t);
+       cout<<calValue<<endl;
+	   waveForm[i]=calValue;
+     
+}
+
+sound1.MakeWavFromInt("fire.wav",samplingRate, waveForm, nSample);
+return 0;
+}  
+
+

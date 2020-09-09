@@ -1,0 +1,56 @@
+
+#include <iostream> 
+# include <math.h>
+# include "wav.hpp"
+# include <fstream>
+
+using namespace std;
+int main (){
+
+ double samplingRate=44100;	
+ double dt=1/samplingRate;
+ double durationT=1;
+ 
+ //Counting numbers of lines in file
+  int numNote =0;
+  string line;
+  ifstream inNote;
+  inNote.open("score1.txt");
+  while (getline(inNote,line)){
+    numNote++;
+  }//Make an array for a notes
+  double note[numNote];
+  //Going back to begining a file
+  inNote.clear();
+  inNote.seekg (0, ios::beg);
+  int i=0;
+ 
+  while (getline(inNote,line)){
+	  //convert from string to double
+	  std::string::size_type sz;
+	  note[i++]= std::stod(line,&sz);
+	  
+   } 
+ int nSample= (int)(durationT*samplingRate);
+
+ WavSound sound1;
+
+ int waveForm[nSample*numNote];
+ cout<<nSample*numNote<<endl;
+ double calValue;
+ int j = 0;
+ for(int k=0; k<numNote; k=k+1){
+	cout<<k<<endl;
+	 for (int i=0;i<nSample;i=i+1){
+			double t=i*dt;	   
+			calValue= 4000*( sin(2*M_PI*note[k]*t)+0.2*sin(2*M_PI*(note[k]*2)*t)+
+			0.5*sin(2*M_PI*(note[k]*3)*t));
+			
+			waveForm[j]=calValue;
+			j = j+1;
+	}
+  }
+	
+	sound1.MakeWavFromInt("piano.wav",samplingRate, waveForm, nSample*numNote);
+    return 0;  
+  }   	 

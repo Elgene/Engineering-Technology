@@ -1,0 +1,48 @@
+#include <iostream> 
+# include <math.h>
+# include "wav.hpp"
+
+using namespace std;
+int main ()
+{
+ int repeat = 5;	
+ double samplingRate=44100;	
+ double dt=1/samplingRate;
+ double durationT=1;
+ double f1=6000;
+ double f2=3000;
+ double f;
+ int nSample= (int)(durationT*samplingRate);
+
+ WavSound sound1;
+
+ int waveForm[nSample*repeat];
+ 
+ double calValue;
+ int j = 0;
+ for(int k=0; k<repeat; k=k+1){
+	if( k%2 == 0 ){
+	   f = f1;
+	   cout<<"f1"<<endl;
+	 }
+	 else {
+	   f =f2;
+	   cout<<"f2"<<endl;
+	 }
+	 for (int i=0;i<nSample;i=i+1){
+			double t=i*dt;	   
+			calValue= 4000* sin(2*M_PI*f*t);
+			waveForm[j]=calValue;
+			j = j+1;
+	}
+  }
+	//cout<<calValue<<endl;
+	sound1.MakeWavFromInt("ambulance.wav",samplingRate, waveForm, nSample*repeat);
+    return 0;     	  
+       
+}
+     
+
+
+
+
